@@ -38,3 +38,6 @@ Then open [http://localhost:8501](http://localhost:8501) in your browser.
 - Crypto data from Binance API
 - Multi-stock portfolio training
 - Strategy comparison dashboard
+
+Flowchart
+<img width="1024" height="1536" alt="75bcf2a6-00a0-4ad9-8db5-6cc59c79d9b2" src="https://github.com/user-attachments/assets/d07f0898-82df-4fff-8062-f3f034bc3fbd" />
