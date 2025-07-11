@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Trading Agent Flowchart</title>
+    <!-- Chosen Palette: Warm Neutrals -->
+    <!-- Application Structure Plan: The application uses a vertical, single-column layout to guide the user sequentially through the steps of the trading agent's workflow, directly mirroring the linear nature of the source flowchart. This structure is the most intuitive for understanding a process. Each step is presented as a distinct "card" for clarity. The key interaction is reserved for the final "Visualize Results" section, where a button triggers a dynamic, animated Chart.js chart. This design choice focuses user attention on the process flow and provides an engaging, climactic payoff by simulating the agent's results, making the outcome more tangible than a static diagram. -->
+    <!-- Visualization & Content Choices: The flowchart's structure is built using semantic HTML and styled with Tailwind CSS to create cards and connecting arrows, avoiding static images or SVG for flexibility and performance (Goal: Organize). Key textual information from each flowchart step is presented in these cards (Goal: Inform). The core visualization is a dynamic line chart in the final step, powered by Chart.js (Goal: Change/Compare). A user click initiates an animation that draws the portfolio value and stock price over time, with markers indicating buy/sell actions. This interaction was chosen to vividly demonstrate the agent's decision-making process and its impact, providing a more compelling summary than a static chart. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* slate-50 */
+        }
+        .flow-card {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        .flow-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        .arrow-connector .arrow-line {
+            width: 3px;
+            height: 40px;
+            background-color: #cbd5e1; /* slate-300 */
+        }
+        .arrow-connector .arrow-head {
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 12px solid #cbd5e1; /* slate-300 */
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+<body class="text-slate-700">
+
+    <div class="mx-auto max-w-4xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+        <header class="text-center mb-12">
+            <h1 class="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">Interactive Trading Agent Flowchart</h1>
+            <p class="mt-3 max-w-2xl mx-auto text-lg text-slate-600">An interactive walkthrough of the data pipeline and machine learning process for an automated stock trading agent.</p>
+        </header>
+
+        <div class="flex flex-col items-center space-y-4">
+            
+            <!-- Step 1 -->
+            <div class="flow-card w-full max-w-md bg-white p-6 rounded-xl shadow-md border border-slate-200">
+                <div class="flex items-center space-x-4">
+                    <div class="flex-shrink-0 bg-sky-100 text-sky-600 rounded-full h-10 w-10 flex items-center justify-center">
+                        <span>🚀</span>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-slate-800">User Opens Streamlit App</h3>
+                        <p class="text-slate-500">The process begins when the user accesses the web application.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="arrow-connector flex flex-col items-center">
+                <div class="arrow-line"></div>
+                <div class="arrow-head"></div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="flow-card w-full max-w-md bg-white p-6 rounded-xl shadow-md border border-slate-200">
+                <div class="flex items-center space-x-4">
+                    <div class="flex-shrink-0 bg-sky-100 text-sky-600 rounded-full h-10 w-10 flex items-center justify-center">
+                        <span>📥</span>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-slate-800">User Inputs</h3>
+                         <ul class="mt-1 list-disc list-inside text-slate-500 space-y-1">
+                            <li>Stock Symbol (e.g., AAPL, BTC-USD)</li>
+                            <li>Date Range for analysis</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="arrow-connector flex flex-col items-center">
+                <div class="arrow-line"></div>
+                <div class="arrow-head"></div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="flow-card w-full max-w-md bg-white p-6 rounded-xl shadow-md border border-slate-200">
+                 <div class="flex items-center space-x-4">
+                    <div class="flex-shrink-0 bg-sky-100 text-sky-600 rounded-full h-10 w-10 flex items-center justify-center">
+                        <span>🌐</span>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-slate-800">Fetch Data via yfinance</h3>
+                        <p class="text-slate-500">The application retrieves historical market data based on user inputs.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="arrow-connector flex flex-col items-center">
+                <div class="arrow-line"></div>
+                <div class="arrow-head"></div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="flow-card w-full max-w-md bg-white p-6 rounded-xl shadow-md border border-slate-200">
+                 <div class="flex items-center space-x-4">
+                    <div class="flex-shrink-0 bg-sky-100 text-sky-600 rounded-full h-10 w-10 flex items-center justify-center">
+                        <span>🧹</span>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-slate-800">Preprocess Data</h3>
+                        <ul class="mt-1 list-disc list-inside text-slate-500 space-y-1">
+                            <li>Drop any missing values (NaNs)</li>
+                            <li>Select OHLCV features (Open, High, Low, Close, Volume)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="arrow-connector flex flex-col items-center">
+                <div class="arrow-line"></div>
+                <div class="arrow-head"></div>
+            </div>
+
+            <!-- Step 5 -->
+            <div class="flow-card w-full max-w-md bg-white p-6 rounded-xl shadow-md border border-slate-200">
+                <div class="flex items-center space-x-4">
+                    <div class="flex-shrink-0 bg-sky-100 text-sky-600 rounded-full h-10 w-10 flex items-center justify-center">
+                        <span>⚙️</span>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-slate-800">Initialize Trading Environment</h3>
+                        <p class="text-slate-500">A custom simulation environment (like OpenAI Gym) is set up.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="arrow-connector flex flex-col items-center">
+                <div class="arrow-line"></div>
+                <div class="arrow-head"></div>
+            </div>
+
+            <!-- Step 6 -->
+            <div class="flow-card w-full max-w-md bg-white p-6 rounded-xl shadow-md border border-slate-200">
+                <div class="flex items-center space-x-4">
+                    <div class="flex-shrink-0 bg-sky-100 text-sky-600 rounded-full h-10 w-10 flex items-center justify-center">
+                        <span>🧠</span>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-slate-800">Train Reinforcement Learning Agent</h3>
+                        <p class="text-slate-500">An agent learns a Buy/Sell/Hold policy by interacting with the environment.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="arrow-connector flex flex-col items-center">
+                <div class="arrow-line"></div>
+                <div class="arrow-head"></div>
+            </div>
+
+            <!-- Step 7 -->
+            <div class="flow-card w-full max-w-md bg-white p-6 rounded-xl shadow-md border border-slate-200">
+                 <div class="flex items-center space-x-4">
+                    <div class="flex-shrink-0 bg-sky-100 text-sky-600 rounded-full h-10 w-10 flex items-center justify-center">
+                        <span>🤖</span>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-slate-800">Simulate Trading</h3>
+                        <p class="text-slate-500">The trained agent applies its learned policy to the dataset to make trading decisions.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="arrow-connector flex flex-col items-center">
+                <div class="arrow-line"></div>
+                <div class="arrow-head"></div>
+            </div>
+
+            <!-- Step 8 -->
+            <div class="flow-card w-full max-w-2xl bg-white p-6 rounded-xl shadow-md border border-slate-200 text-center">
+                <h3 class="text-xl font-semibold text-slate-800 mb-2">Visualize Results</h3>
+                <p class="text-slate-500 mb-4 max-w-xl mx-auto">This section demonstrates the outcome of the agent's trading simulation. The chart shows the agent's portfolio value against the stock's actual price, with markers indicating when it decided to buy or sell. Click the button to run the animated simulation.</p>
+                <div class="chart-container my-6">
+                    <canvas id="tradingChart"></canvas>
+                </div>
+                <div id="summary" class="mt-4 text-lg font-medium text-slate-800 h-8"></div>
+                <button id="runSimulationBtn" class="mt-4 px-6 py-2 bg-sky-600 text-white font-semibold rounded-lg shadow-md hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 transition">
+                    Run Simulation
+                </button>
+            </div>
+
+             <div class="arrow-connector flex flex-col items-center">
+                <div class="arrow-line"></div>
+                <div class="arrow-head"></div>
+            </div>
+
+            <!-- Step 9 -->
+            <div class="flow-card w-full max-w-md bg-white p-6 rounded-xl shadow-md border border-slate-200">
+                 <div class="flex items-center space-x-4">
+                    <div class="flex-shrink-0 bg-green-100 text-green-600 rounded-full h-10 w-10 flex items-center justify-center">
+                        <span>📈</span>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-slate-800">View Dashboard</h3>
+                        <p class="text-slate-500">The user sees the final results and performance summary.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const runSimulationBtn = document.getElementById('runSimulationBtn');
+        const summaryEl = document.getElementById('summary');
+        const ctx = document.getElementById('tradingChart').getContext('2d');
+        let tradingChart;
+
+        const chartData = {
+            labels: Array.from({ length: 30 }, (_, i) => `Day ${i + 1}`),
+            stockPrices: [150, 152, 151, 149, 153, 155, 154, 156, 158, 160, 157, 159, 162, 161, 163, 165, 164, 162, 160, 158, 161, 163, 165, 167, 166, 168, 170, 172, 171, 173],
+            portfolioValues: [10000, 10000, 10000, 10134, 10269, 10202, 10338, 10475, 10614, 10476, 10617, 10760, 10693, 10837, 10982, 10915, 10776, 10638, 10502, 10714, 10859, 11005, 11153, 11083, 11232, 11382, 11534, 11462, 11613, 11613],
+            actions: [null, null, 'buy', null, null, 'sell', 'buy', null, null, 'sell', 'buy', null, null, 'buy', null, 'sell', null, null, 'sell', 'buy', null, null, 'buy', 'sell', 'buy', null, null, 'sell', 'buy', null]
+        };
+
+        const initialConfig = {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [
+                    {
+                        label: 'Portfolio Value ($)',
+                        data: [],
+                        borderColor: 'rgb(8, 145, 178)', // cyan-600
+                        backgroundColor: 'rgba(8, 145, 178, 0.1)',
+                        borderWidth: 2,
+                        yAxisID: 'y',
+                        tension: 0.1,
+                        fill: true,
+                    },
+                    {
+                        label: 'Stock Price ($)',
+                        data: [],
+                        borderColor: 'rgb(100, 116, 139)', // slate-500
+                        borderWidth: 2,
+                        yAxisID: 'y1',
+                        tension: 0.1,
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                scales: {
+                    x: {
+                        grid: { display: false }
+                    },
+                    y: {
+                        type: 'linear',
+                        display: true,
+                        position: 'left',
+                        title: { display: true, text: 'Portfolio Value ($)' },
+                    },
+                    y1: {
+                        type: 'linear',
+                        display: true,
+                        position: 'right',
+                        title: { display: true, text: 'Stock Price ($)' },
+                        grid: { drawOnChartArea: false },
+                    }
+                },
+                plugins: {
+                    legend: { position: 'top' },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed.y !== null) {
+                                    label += new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(context.parsed.y);
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                },
+                animation: {
+                    duration: 0
+                }
+            }
+        };
+        
+        function createChart() {
+            if (tradingChart) {
+                tradingChart.destroy();
+            }
+            tradingChart = new Chart(ctx, JSON.parse(JSON.stringify(initialConfig)));
+            summaryEl.textContent = 'Click "Run Simulation" to begin.';
+        }
+
+        runSimulationBtn.addEventListener('click', () => {
+            runSimulationBtn.disabled = true;
+            runSimulationBtn.textContent = 'Simulating...';
+            summaryEl.textContent = '';
+            
+            if (tradingChart) {
+                tradingChart.destroy();
+            }
+            
+            const config = JSON.parse(JSON.stringify(initialConfig));
+            tradingChart = new Chart(ctx, config);
+
+            let i = 0;
+            const interval = setInterval(() => {
+                if (i < chartData.labels.length) {
+                    tradingChart.data.labels.push(chartData.labels[i]);
+                    tradingChart.data.datasets[0].data.push(chartData.portfolioValues[i]);
+                    tradingChart.data.datasets[1].data.push(chartData.stockPrices[i]);
+
+                    // Add buy/sell markers
+                    if (chartData.actions[i]) {
+                        const pointStyle = chartData.actions[i] === 'buy' ? 'triangle' : 'rectRot';
+                        const color = chartData.actions[i] === 'buy' ? 'rgb(22, 163, 74)' : 'rgb(220, 38, 38)'; // green-600, red-600
+                        const radius = 6;
+                        
+                        const datasetIndex = 1; // On stock price line
+                        if (!tradingChart.data.datasets[datasetIndex].pointStyle) {
+                            tradingChart.data.datasets[datasetIndex].pointStyle = [];
+                            tradingChart.data.datasets[datasetIndex].pointBackgroundColor = [];
+                            tradingChart.data.datasets[datasetIndex].pointRadius = [];
+                        }
+                         // Pad with nulls to align with current index
+                        while(tradingChart.data.datasets[datasetIndex].pointStyle.length < i) {
+                            tradingChart.data.datasets[datasetIndex].pointStyle.push(null);
+                            tradingChart.data.datasets[datasetIndex].pointBackgroundColor.push(null);
+                            tradingChart.data.datasets[datasetIndex].pointRadius.push(null);
+                        }
+                        tradingChart.data.datasets[datasetIndex].pointStyle[i] = pointStyle;
+                        tradingChart.data.datasets[datasetIndex].pointBackgroundColor[i] = color;
+                        tradingChart.data.datasets[datasetIndex].pointRadius[i] = radius;
+                    }
+
+                    tradingChart.update('none');
+                    i++;
+                } else {
+                    clearInterval(interval);
+                    runSimulationBtn.disabled = false;
+                    runSimulationBtn.textContent = 'Re-run Simulation';
+                    const finalValue = chartData.portfolioValues[chartData.portfolioValues.length - 1];
+                    summaryEl.textContent = `Simulation Complete. Final Portfolio Value: ${new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(finalValue)}`;
+                }
+            }, 75);
+        });
+
+        window.onload = createChart;
+    </script>
+
+</body>
+</html>
