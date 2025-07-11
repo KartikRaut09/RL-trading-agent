@@ -31,6 +31,8 @@ pip install -r requirements.txt
 ```bash
 streamlit run app.py
 ```
+Interactive flowchart for better understanding!
+file:///D:/RL_Trading_Agent/trading%20agent.html
 
 Then open [http://localhost:8501](http://localhost:8501) in your browser.
 
